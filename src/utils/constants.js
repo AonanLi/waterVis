@@ -20,7 +20,7 @@ export const XUNITS = [
     { value: 'day', label: 'Day', size: '3px' }
 ];
 
-export const XUNITS_SIZE = { year: '25px', month: '3px', week: '3px', day: '3px' };
+export const XUNITS_SIZE = { year: '25px', month: '30px', week: '3px', day: '3px' };
 
 export const YEARS = _.range(1998, 2017).map(y => y.toString());
 

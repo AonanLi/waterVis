@@ -31,11 +31,7 @@ const Side = ({ record, onChange }) => {
                     </Option>
                 ))}
             </Select>
-            <Select
-                value={year.toString()}
-                style={selectStyle}
-                onChange={v => onChange('year', parseInt(v, 10))}
-            >
+            <Select value={year} style={selectStyle} onChange={v => onChange('year', v)}>
                 {YEARS.map((y, i) => (
                     <Option value={y} key={i}>
                         {y}

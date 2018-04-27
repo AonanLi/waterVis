@@ -13,7 +13,7 @@ class MainPage extends Component {
         this.state = {
             locations: ['Achara'],
             xUnit: 'year',
-            year: 2015
+            year: '2015'
         };
     }
 

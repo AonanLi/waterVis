@@ -14,14 +14,24 @@ export const LOCATIONS = [
 ];
 
 export const XUNITS = [
-    { value: 'year', label: 'Year', size: '40px' },
+    { value: 'year', label: 'Year' },
     { value: 'month', label: 'Month' },
     { value: 'week', label: 'Week' },
-    { value: 'day', label: 'Day', size: '3px' }
+    { value: 'day', label: 'Day' }
 ];
 
-export const XUNITS_SIZE = { year: '25px', month: '30px', week: '3px', day: '3px' };
+export const XUNITS_SIZE = { year: '25px', month: '30px', week: '18px', day: '3px' };
 
 export const YEARS = _.range(1998, 2017).map(y => y.toString());
 
-export const COLORS = ['#FFF59D', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#F44336', '#B71C1C'];
+export const COLORS = [
+    '#FED89A',
+    '#FEB67C',
+    '#FB835F',
+    '#F3655C',
+    '#D2426F',
+    '#A02F7F',
+    '#491078',
+    '#3B0F70',
+    '#000004'
+];

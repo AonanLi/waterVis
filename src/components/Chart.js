@@ -28,14 +28,16 @@ const Chart = ({ measure, location, record }) => {
         <Row>
             <Col span={4}>{measure}</Col>
             <Col span={20}>
-                {_.times(squaresNumber).map(j => (
-                    <Square
-                        key={j}
-                        measure={measure}
-                        xUnit={record.xUnit}
-                        item={getItem({ ...record, location, measure }, j)}
-                    />
-                ))}
+                {_.times(squaresNumber).map(j => {
+                    return (
+                        <Square
+                            key={j}
+                            measure={measure}
+                            xUnit={record.xUnit}
+                            item={getItem({ ...record, location, measure }, j)}
+                        />
+                    );
+                })}
             </Col>
         </Row>
     );

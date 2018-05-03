@@ -50,7 +50,29 @@ const searchMonth = _.reduce(
             _.groupBy(value, v => v.measure),
             (r, v, k) => ({
                 ...r,
-                [k]: _.groupBy(v, val => moment(val.sampleDate).format('MM-YY'))
+                [k]: _.groupBy(v, val => {
+                    const date = moment(val.sampleDate);
+                    return `${date.year()}-${date.month() + 1}`;
+                })
+            }),
+            {}
+        )
+    }),
+    {}
+);
+
+const searchWeek = _.reduce(
+    groupLocation,
+    (result, value, key) => ({
+        ...result,
+        [key]: _.reduce(
+            _.groupBy(value, v => v.measure),
+            (r, v, k) => ({
+                ...r,
+                [k]: _.groupBy(v, val => {
+                    const date = moment(val.sampleDate);
+                    return `${date.year()}-${date.week()}`;
+                })
             }),
             {}
         )
@@ -71,14 +93,15 @@ export const getItem = (record, index) => {
     const { location, measure, xUnit, year } = record;
     if (xUnit === 'day') {
         const date = moment([year])
-            .dayOfYear(index)
+            .dayOfYear(index + 1)
             .format('DD-MMM-YY');
-        return _.get(searchDate, `[${location}][${measure}][${date}]`);
+        return _.get(searchDate, [location, measure, date]);
     }
     if (xUnit === 'year') {
-        return _.get(searchYear, `[${location}][${measure}][${YEARS[index]}]`);
+        return _.get(searchYear, [location, measure, YEARS[index]]);
     }
     if (xUnit === 'month') {
-        return _.get(searchMonth, `[${location}][${measure}][${index}-${year.substring(2, 4)}]`);
+        return _.get(searchMonth, [location, measure, `${year}-${index + 1}`]);
     }
+    return _.get(searchWeek, [location, measure, `${year}-${index + 1}`]);
 };

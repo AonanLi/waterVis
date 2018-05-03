@@ -11,8 +11,9 @@ class MainPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            locations: ['Achara'],
-            xUnit: 'year',
+            page: 'HeatMap',
+            locations: ['Boonsri'],
+            xUnit: 'week',
             year: '2015'
         };
     }
@@ -20,15 +21,16 @@ class MainPage extends Component {
     onChange = (prop, value) => this.setState({ [prop]: value });
 
     render() {
+        const { state, onChange } = this;
         return (
             <Layout>
-                <NavBar />
+                <NavBar page={state.page} onChange={onChange} />
                 <Layout style={{ padding: '24px 0', background: '#fff' }}>
                     <Sider width={200} style={{ background: '#fff', borderRight: '0.3px solid' }}>
-                        <Side record={this.state} onChange={this.onChange} />
+                        <Side record={state} onChange={onChange} />
                     </Sider>
                     <Content style={{ padding: '0 24px', minHeight: 280 }}>
-                        <ContentPage record={this.state} onChange={this.onChange} />
+                        <ContentPage record={state} onChange={onChange} />
                     </Content>
                 </Layout>
             </Layout>

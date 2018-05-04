@@ -20,9 +20,24 @@ export const XUNITS = [
     { value: 'day', label: 'Day' }
 ];
 
-export const XUNITS_SIZE = { year: '25px', month: '30px', week: '18px', day: '3px' };
+export const XUNITS_SIZE = { year: 25, month: 30, week: 18, day: 3 };
 
 export const YEARS = _.range(1998, 2017).map(y => y.toString());
+
+export const MONTHS = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sept',
+    'Oct',
+    'Nov',
+    'Dec'
+];
 
 export const COLORS = [
     '#FED89A',

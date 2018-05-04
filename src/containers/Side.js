@@ -1,15 +1,16 @@
 import React from 'react';
-import { Tree, Select } from 'antd';
+import { Select } from 'antd';
+
+import TooltipCard from '../components/TooltipCard';
 
 import { LOCATIONS, XUNITS, YEARS } from '../utils/constants';
 
 const Option = Select.Option;
-const TreeNode = Tree.TreeNode;
 
 const selectStyle = { width: '80%', marginBottom: '8px' };
 
 const Side = ({ record, onChange }) => {
-    const { xUnit, year, locations } = record;
+    const { xUnit, year, locations, selected } = record;
     return (
         <div>
             <Select
@@ -38,6 +39,7 @@ const Side = ({ record, onChange }) => {
                     </Option>
                 ))}
             </Select>
+            <TooltipCard selected={selected} />
         </div>
     );
 };

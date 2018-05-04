@@ -10,7 +10,9 @@ const ContentPage = ({ record, onChange }) => {
         return <PCAPage />;
     }
     if (page === 'HeatMap') {
-        return _.map(locations, l => <HeatMap key={l} record={record} location={l} />);
+        return _.map(locations, l => (
+            <HeatMap key={l} record={record} onChange={onChange} location={l} />
+        ));
     }
     return false;
 };

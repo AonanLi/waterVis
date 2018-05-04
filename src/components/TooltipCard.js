@@ -1,9 +1,16 @@
 import React from 'react';
 import { Card } from 'antd';
-import _ from 'lodash';
 
-const TooltipCard = ({ item }) => (
-    <div>{_.map(item, (c, i) => <p key={i}>{`${c.value} ${c.sampleDate}`}</p>)}</div>
-);
+const TooltipCard = ({ selected }) => {
+    return (
+        <Card style={{ width: '80%', marginLeft: '20px' }}>
+            {selected.map((s, i) => <p key={i}>{`${s.value} ${s.sampleDate}`}</p>)}
+        </Card>
+    );
+};
+
+TooltipCard.defaultProps = {
+    selected: []
+};
 
 export default TooltipCard;

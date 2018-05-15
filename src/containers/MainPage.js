@@ -12,10 +12,10 @@ class MainPage extends Component {
         super(props);
         this.state = {
             page: 'HeatMap',
-            locations: ['Boonsri'],
+            locations: ['Achara', 'Boonsri', 'Busarakhan', 'Chai'],
             xUnit: 'week',
             year: '2015',
-            measures: ['Water temperature', 'Ammonium']
+            measures: ['Water temperature', 'Dissolved oxygen', 'Total hardness', 'Calcium']
         };
     }
 

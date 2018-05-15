@@ -3,7 +3,7 @@ import { Stage, Layer, Group, Rect, Text } from 'react-konva';
 import moment from 'moment';
 import _ from 'lodash';
 
-import { location_measures, measure_ranges, getItem } from '../utils/query';
+import { measure_ranges, getItem } from '../utils/query';
 import { YEARS, COLORS, XUNITS_SIZE, MONTHS } from '../utils/constants';
 
 const getInRangeColor = (measure, value) => {
@@ -50,12 +50,13 @@ const getText = (record, index) => {
 
 class HeatMap extends Component {
     shouldComponentUpdate(nextProps) {
-        const { location, record } = this.props;
-        const { xUnit, year } = record;
+        const { record } = this.props;
+        const { xUnit, year, locations, measures } = record;
         if (
             nextProps.record.xUnit === xUnit &&
             nextProps.record.year === year &&
-            nextProps.location === location
+            nextProps.record.locations === locations &&
+            nextProps.record.measures === measures
         ) {
             return false;
         }
@@ -63,18 +64,19 @@ class HeatMap extends Component {
     }
 
     render() {
-        const { record, location, onChange } = this.props;
-        const measures = location_measures(location);
+        const { record, onChange } = this.props;
+        const { measures, locations } = record;
         const size = getSize(record);
         const squaresNumber = getSquaresNumber(record);
         const border = size + (record.xUnit === 'day' ? 0.5 : 2);
-        const textHeight = Math.max(border, 20);
-        const height = measures.length * textHeight;
+        const elementHeight = Math.max(border, 20);
+        const textHeight = locations.length * elementHeight + 20;
+        const height = elementHeight + measures.length * textHeight;
         return (
             <Stage width={1920} height={height}>
                 <Layer>
                     <Group>
-                        <Text text={location} fill="rgba(0, 0, 0, 0.65)" x={0} y={0} />
+                        <Text text="Measure-Locations" fill="rgba(0, 0, 0, 0.65)" x={0} y={0} />
                         {_.times(squaresNumber).map((s, j) => {
                             return (
                                 <Text
@@ -88,30 +90,37 @@ class HeatMap extends Component {
                             );
                         })}
                         {measures.map((measure, i) => (
-                            <Group key={i}>
-                                <Text
-                                    text={measure}
-                                    fill="rgba(0, 0, 0, 0.65)"
-                                    x={0}
-                                    y={20 + i * textHeight}
-                                />
-                                {_.times(squaresNumber).map((s, j) => {
-                                    const item = getItem({ ...record, location, measure }, s);
-                                    const value = _.isUndefined(item)
-                                        ? undefined
-                                        : _.meanBy(item, f => f.value);
-                                    return (
-                                        <Rect
-                                            key={j}
-                                            x={180 + j * border}
-                                            y={20 + i * textHeight}
-                                            width={size}
-                                            height={size}
-                                            fill={getInRangeColor(measure, value)}
-                                            onClick={() => onChange('selected', item)}
+                            <Group key={measure}>
+                                {locations.map((location, j) => (
+                                    <Group key={location}>
+                                        <Text
+                                            text={`${measure}-${location}`}
+                                            fill="rgba(0, 0, 0, 0.65)"
+                                            x={0}
+                                            y={20 + i * textHeight + j * elementHeight}
                                         />
-                                    );
-                                })}
+                                        {_.times(squaresNumber).map((s, k) => {
+                                            const item = getItem(
+                                                { ...record, location, measure },
+                                                s
+                                            );
+                                            const value = _.isUndefined(item)
+                                                ? undefined
+                                                : _.meanBy(item, f => f.value);
+                                            return (
+                                                <Rect
+                                                    key={k}
+                                                    x={180 + k * border}
+                                                    y={20 + i * textHeight + j * elementHeight}
+                                                    width={size}
+                                                    height={size}
+                                                    fill={getInRangeColor(measure, value)}
+                                                    onClick={() => onChange('selected', item)}
+                                                />
+                                            );
+                                        })}
+                                    </Group>
+                                ))}
                             </Group>
                         ))}
                     </Group>

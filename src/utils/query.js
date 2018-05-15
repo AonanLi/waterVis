@@ -80,8 +80,18 @@ const searchWeek = _.reduce(
     {}
 );
 
-export const location_measures = location => {
-    return _.uniq(_.filter(data, d => d.location === location).map(v => v.measure));
+export const getMeasures = ({ locations, xUnit, year }) => {
+    return _.uniq(
+        _.filter(
+            data,
+            d => _.includes(locations, d.location) && isIncluded(xUnit, year, d.sampleDate)
+        ).map(v => v.measure)
+    );
+};
+
+const isIncluded = (xUnit, year, sampleDate) => {
+    const date = moment(sampleDate);
+    return xUnit === 'year' ? true : date.year().toString() === year ? true : false;
 };
 
 export const measure_ranges = measure => {

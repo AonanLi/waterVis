@@ -14,7 +14,8 @@ class MainPage extends Component {
             page: 'HeatMap',
             locations: ['Boonsri'],
             xUnit: 'week',
-            year: '2015'
+            year: '2015',
+            measures: ['Water temperature', 'Ammonium']
         };
     }
 

@@ -3,6 +3,7 @@ import { Select } from 'antd';
 
 import TooltipCard from '../components/TooltipCard';
 
+import { getMeasures } from '../utils/query';
 import { LOCATIONS, XUNITS, YEARS } from '../utils/constants';
 
 const Option = Select.Option;
@@ -10,7 +11,7 @@ const Option = Select.Option;
 const selectStyle = { width: '80%', marginBottom: '8px' };
 
 const Side = ({ record, onChange }) => {
-    const { xUnit, year, locations, selected } = record;
+    const { xUnit, year, locations, selected, measures } = record;
     return (
         <div>
             <Select
@@ -22,6 +23,18 @@ const Side = ({ record, onChange }) => {
                 {LOCATIONS.map((l, i) => (
                     <Option value={l} key={i}>
                         {l}
+                    </Option>
+                ))}
+            </Select>
+            <Select
+                value={measures}
+                style={selectStyle}
+                onChange={v => onChange('measures', v)}
+                mode="multiple"
+            >
+                {getMeasures(record).map((m, i) => (
+                    <Option value={m} key={i}>
+                        {m}
                     </Option>
                 ))}
             </Select>
